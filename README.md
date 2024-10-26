@@ -109,6 +109,8 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** The page crashes
 
+**Solution:** Check if the `newValue` in `onChange` is `EMPTY_EMPLOYEE`. If it is, we will use `loadAllTransactions`.
+
 # Bug 4: Clicking on View More button not showing correct data
 
 **How to reproduce:**
