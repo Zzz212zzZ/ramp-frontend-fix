@@ -94,6 +94,8 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** Nothing happens
 
+**Solution**: Add one `onClick` function in the `checkBox` to handle the clicking
+
 # Bug 3: Cannot select _All Employees_ after selecting an employee
 
 **How to reproduce:**
