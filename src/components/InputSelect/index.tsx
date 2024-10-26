@@ -1,5 +1,5 @@
 import Downshift from "downshift"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import classNames from "classnames"
 import { DropdownPosition, GetDropdownPositionFn, InputSelectOnChange, InputSelectProps } from "./types"
 
@@ -18,6 +18,11 @@ export function InputSelect<TItem>({
     left: 0,
   })
 
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false)
+
+  // Ref to the toggle button
+  const toggleButtonRef = useRef<HTMLDivElement | null>(null);
+
   const onChange = useCallback<InputSelectOnChange<TItem>>(
     (selectedItem) => {
       if (selectedItem === null) {
@@ -29,6 +34,23 @@ export function InputSelect<TItem>({
     },
     [consumerOnChange]
   )
+
+  useEffect(() => {
+    function handleScroll() {
+      if (toggleButtonRef.current !== null) {
+        setDropdownPosition(getDropdownPosition(toggleButtonRef.current));
+      }
+    }
+
+    if (isDropDownOpen) {
+      window.addEventListener("scroll", handleScroll)
+      handleScroll()
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [isDropDownOpen])
 
   return (
     <Downshift<TItem>
@@ -59,9 +81,10 @@ export function InputSelect<TItem>({
             <div
               className="RampInputSelect--input"
               onClick={(event) => {
-                setDropdownPosition(getDropdownPosition(event.target))
+                setIsDropDownOpen(!isDropDownOpen)
                 toggleProps.onClick(event)
               }}
+              ref={toggleButtonRef}
             >
               {inputValue}
             </div>
@@ -120,12 +143,11 @@ export function InputSelect<TItem>({
 const getDropdownPosition: GetDropdownPositionFn = (target) => {
   if (target instanceof Element) {
     const { top, left } = target.getBoundingClientRect()
-    const { scrollY } = window
     return {
-      top: scrollY + top + 63,
+      top:  top + 63,
       left,
     }
   }
-
+  
   return { top: 0, left: 0 }
 }

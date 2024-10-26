@@ -63,7 +63,7 @@ We don't have a real API for this challenge, so we added some utilities to simul
 - Solutions can be HTML, CSS or Javascript oriented, depending on the bug and your solution.
 - Modify any file inside the `src` folder as long as the expected result is correct.
 - The goal is to solve the bug as expected. Finding a clean and efficient solution is a nice to have, but not required.
-- Except for the last one, the first bugs don't depend on each other and can be solved in any order.
+- **Except for the last one, the first bugs don't depend on each other and can be solved in any order.**
   - We recommend reading all the descriptions first. You might find the solution to one bug while trying to fix another.
   - The last bug will need other bugs to be fixed first in order to be reproduced.
 - You cannot add any external dependency to the project. The bugs can be solved with vanilla HTML, CSS and Javascript.
@@ -81,6 +81,8 @@ We don't have a real API for this challenge, so we added some utilities to simul
 **Expected:** Options dropdown moves with its parent input as you scroll the page
 
 **Actual:** Options dropdown stays in the same position as you scroll the page, losing the reference to the select input
+
+**Solution**: The dropdown component should be stuck with the `InputSelect`, rather than fixed at a static position in the page. So we firstly removed the `scrollY` in `getDropdownPosition`. Also, the position is updated dynamically by registering an `eventListener`, as long as the dropdown component exists.
 
 # Bug 2: Approve checkbox not working
 
