@@ -83,12 +83,12 @@ export function App() {
         <div className="RampGrid">
           <Transactions transactions={transactions} />
 
-          {transactions !== null && (
+          {transactions !== null && paginatedTransactions !== null && (
             <button
               className="RampButton"
               disabled={isPaginatedTransactionsLoading}
               onClick={async () => {
-                await loadAllTransactions()
+                await paginatedTransactionsUtils.fetchAll()
               }}
             >
               View More

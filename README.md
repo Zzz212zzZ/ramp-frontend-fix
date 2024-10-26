@@ -182,6 +182,8 @@ _This bug has 2 wrong behaviors that can be fixed with the same solution. It's a
 
 **Actual:** When you reach the end of the data, the **View More** button is still showing and you are still able to click the button. If you click it, the page crashes.
 
+**Solution:** Conditional rendering for `View More` Button. Only when `paginatedTransactions` is not `null` is this button displayed.
+
 # Bug 7: Approving a transaction won't persist the new value
 
 _You need to fix some of the previous bugs in order to reproduce_
